@@ -1,10 +1,12 @@
 package modelo;
 
+import java.io.Serializable;
+
 import java.util.GregorianCalendar;
 
-public class Tarea
+public class Tarea implements Serializable
 {
-    private Colaborador colaborador;
+    private Usuario colaborador;
     private Cliente cliente;
     private Servicio servicio;
     private GregorianCalendar fecha_inicio;

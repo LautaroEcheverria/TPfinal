@@ -1,6 +1,8 @@
 package modelo;
 
-public class Estado
+import java.io.Serializable;
+
+public class Estado implements Serializable
 {
     public Estado()
     {

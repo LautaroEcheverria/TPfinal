@@ -1,6 +1,8 @@
 package modelo;
 
-public class GrupoDeClientes
+import java.io.Serializable;
+
+public class GrupoDeClientes implements Serializable
 {
     private String nombre_grupo;
     
