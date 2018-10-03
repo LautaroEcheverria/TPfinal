@@ -12,9 +12,10 @@ public class Usuario extends Persona
         super();
     }
 
-    public Usuario(String nombre_de_usuario, String contraseña)
+    public Usuario(String nombre_apellido, String email, String telefono,String nombre_de_usuario, String contraseña)
     {
-        super();
+        // TODO Implement this method
+        super(nombre_apellido, email, telefono);
         this.nombre_de_usuario = nombre_de_usuario;
         this.contraseña = contraseña;
     }

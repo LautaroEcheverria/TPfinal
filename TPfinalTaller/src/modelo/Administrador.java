@@ -2,13 +2,15 @@ package modelo;
 
 public class Administrador extends Usuario
 {
-    public Administrador(String string, String string1, String string2, String string3, String string4)
-    {
-        super(string, string1, string2, string3, string4);
-    }
-
     public Administrador()
     {
         super();
+    }
+
+    public Administrador(String nombre_apellido, String email, String telefono, String nombre_de_usuario,
+                         String contraseña)
+    {
+        // TODO Implement this method
+        super(nombre_apellido, email, telefono, nombre_de_usuario, contraseña);
     }
 }

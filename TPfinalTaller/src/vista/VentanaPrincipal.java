@@ -1,6 +1,10 @@
 
 package vista;
 
+import java.awt.Dimension;
+
+import modelo.Tarea;
+
 /**
  *
  * @author usuario
@@ -27,22 +31,23 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfUsuario = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtfContrasena = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbIniciaSesion = new javax.swing.JButton();
+        jbCreaUsuario = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        jcbInformes = new javax.swing.JComboBox<>();
+        jbGeneraInf = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlTareas = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jtaInformes = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,24 +59,38 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jLabel1.setText("Usuario:");
         jPanel4.add(jLabel1);
 
-        jTextField1.setText("jTextField1");
-        jPanel4.add(jTextField1);
+        jtfUsuario.setPreferredSize(new java.awt.Dimension(90, 19));
+        jtfUsuario.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jtfUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jtfUsuario);
 
         jPanel2.add(jPanel4);
 
-        jLabel2.setText("Contraseña");
+        jLabel2.setText("Contraseña:");
         jPanel5.add(jLabel2);
 
-        jTextField2.setText("jTextField1");
-        jPanel5.add(jTextField2);
+        jtfContrasena.setPreferredSize(new java.awt.Dimension(90, 19));
+        jtfContrasena.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jtfContrasenaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jtfContrasena);
 
         jPanel2.add(jPanel5);
 
-        jButton1.setText("Iniciar Sesion");
-        jPanel6.add(jButton1);
+        jbIniciaSesion.setText("Iniciar Sesion");
+        jPanel6.add(jbIniciaSesion);
 
-        jButton2.setText("Crear Usuario");
-        jPanel6.add(jButton2);
+        jbCreaUsuario.setText("Crear Usuario");
+        jPanel6.add(jbCreaUsuario);
 
         jPanel2.add(jPanel6);
 
@@ -81,18 +100,18 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jPanel3.setLayout(new java.awt.GridLayout(2, 0));
         jPanel3.add(jPanel8);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Total de tareas", "Tareas Colaborador", "Estado de tareas", "Tareas Usuario" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener()
+        jcbInformes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Total de tareas", "Tareas Colaborador", "Estado de tareas", "Tareas Usuario" }));
+        jcbInformes.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jComboBox1ActionPerformed(evt);
+                jcbInformesActionPerformed(evt);
             }
         });
-        jPanel10.add(jComboBox1);
+        jPanel10.add(jcbInformes);
 
-        jButton3.setText("Generar Informe");
-        jPanel10.add(jButton3);
+        jbGeneraInf.setText("Generar Informe");
+        jPanel10.add(jbGeneraInf);
 
         jPanel3.add(jPanel10);
 
@@ -102,22 +121,18 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         jPanel7.setLayout(new java.awt.GridLayout(1, 2));
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 255, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 207, Short.MAX_VALUE)
-        );
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tareas"));
+        jScrollPane2.setToolTipText("");
 
-        jPanel7.add(jPanel9);
+        jScrollPane2.setViewportView(jlTareas);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jPanel7.add(jScrollPane2);
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informes"));
+
+        jtaInformes.setColumns(20);
+        jtaInformes.setRows(5);
+        jScrollPane1.setViewportView(jtaInformes);
 
         jPanel7.add(jScrollPane1);
 
@@ -126,10 +141,20 @@ public class VentanaPrincipal extends javax.swing.JFrame
         pack();
     }//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBox1ActionPerformed
-    {//GEN-HEADEREND:event_jComboBox1ActionPerformed
+    private void jcbInformesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jcbInformesActionPerformed
+    {//GEN-HEADEREND:event_jcbInformesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jcbInformesActionPerformed
+
+    private void jtfUsuarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jtfUsuarioActionPerformed
+    {//GEN-HEADEREND:event_jtfUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfUsuarioActionPerformed
+
+    private void jtfContrasenaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jtfContrasenaActionPerformed
+    {//GEN-HEADEREND:event_jtfContrasenaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfContrasenaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,10 +236,6 @@ public class VentanaPrincipal extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -226,11 +247,16 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbCreaUsuario;
+    private javax.swing.JButton jbGeneraInf;
+    private javax.swing.JButton jbIniciaSesion;
+    private javax.swing.JComboBox<String> jcbInformes;
+    private javax.swing.JList<Tarea> jlTareas;
+    private javax.swing.JTextArea jtaInformes;
+    private javax.swing.JTextField jtfContrasena;
+    private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 
 }
