@@ -122,6 +122,18 @@
             <Container class="javax.swing.JPanel" name="jPanel8">
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="jbCreaTarea">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Crear Tarea"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jbModificarTarea">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Modificar Tarea"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel10">
 

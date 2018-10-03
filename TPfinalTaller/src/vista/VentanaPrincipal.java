@@ -40,6 +40,8 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jbCreaUsuario = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
+        jbCreaTarea = new javax.swing.JButton();
+        jbModificarTarea = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jcbInformes = new javax.swing.JComboBox<>();
         jbGeneraInf = new javax.swing.JButton();
@@ -98,6 +100,13 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setLayout(new java.awt.GridLayout(2, 0));
+
+        jbCreaTarea.setText("Crear Tarea");
+        jPanel8.add(jbCreaTarea);
+
+        jbModificarTarea.setText("Modificar Tarea");
+        jPanel8.add(jbModificarTarea);
+
         jPanel3.add(jPanel8);
 
         jcbInformes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Total de tareas", "Tareas Colaborador", "Estado de tareas", "Tareas Usuario" }));
@@ -249,9 +258,11 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbCreaTarea;
     private javax.swing.JButton jbCreaUsuario;
     private javax.swing.JButton jbGeneraInf;
     private javax.swing.JButton jbIniciaSesion;
+    private javax.swing.JButton jbModificarTarea;
     private javax.swing.JComboBox<String> jcbInformes;
     private javax.swing.JList<Tarea> jlTareas;
     private javax.swing.JTextArea jtaInformes;
