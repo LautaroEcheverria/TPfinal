@@ -1,12 +1,13 @@
 package modelo;
 
-public class Usuario extends Persona
+import java.io.Serializable;
+
+public class Usuario extends Persona implements Serializable
 {
     private String nombre_de_usuario;
     private String contraseña;
     private String perfil;
-    
-    
+
     public Usuario()
     {
         super();
@@ -18,6 +19,14 @@ public class Usuario extends Persona
         super(nombre_apellido, email, telefono);
         this.nombre_de_usuario = nombre_de_usuario;
         this.contraseña = contraseña;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+
+    public String getPerfil() {
+        return perfil;
     }
 
     public void setNombre_de_usuario(String nombre_de_usuario)

@@ -10,4 +10,21 @@ public class GrupoDeClientes implements Serializable
     {
         super();
     }
+
+    public void setNombre_grupo(String nombre_grupo)
+    {
+        this.nombre_grupo = nombre_grupo;
+    }
+
+    public String getNombre_grupo()
+    {
+        return nombre_grupo;
+    }
+
+    @Override
+    public String toString()
+    {
+        // TODO Implement this method
+        return this.getNombre_grupo();
+    }
 }

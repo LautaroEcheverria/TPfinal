@@ -1,6 +1,8 @@
 package modelo;
 
-public class Colaborador extends Usuario
+import java.io.Serializable;
+
+public class Colaborador extends Usuario implements Serializable
 {
     public Colaborador()
     {

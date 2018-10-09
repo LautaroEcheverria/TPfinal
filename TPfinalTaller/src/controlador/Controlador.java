@@ -3,25 +3,35 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.JButton;
 
+import javax.swing.JOptionPane;
+
 import modelo.BaseDatos;
+import modelo.GrupoDeClientes;
+import modelo.Tarea;
 import modelo.Usuario;
 
 import vista.VentanaPrincipal;
 import vista.VentanaUsuarioNuevo;
 
-public class Controlador implements ActionListener
+public class Controlador implements ActionListener,Observer
 {
     private BaseDatos bd;
     private Usuario usuarioActual;
     private VentanaPrincipal ventanaPrincipal;
     
-    public Controlador()
+    public Controlador(BaseDatos bd)
     {
         super();
+        this.bd = bd;
+        this.bd.addObserver(this);
+        this.ventanaPrincipal = new VentanaPrincipal(this);
+        this.ventanaPrincipal.panelJcbGrupos(this.bd.getGrupoClientes());
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e)
@@ -29,13 +39,15 @@ public class Controlador implements ActionListener
         // TODO I
         if(e.getSource() instanceof JButton)
         {
-            String botonclickeado = (String) e.getSource().toString();
+            JButton aux = (JButton) e.getSource();
+            String botonclickeado = (String) aux.getText();
             switch(botonclickeado.toUpperCase())
             {
                 case ("CREAR USUARIO"): 
-                    creaUsuario();
+                    this.creaUsuario();
                 break;
                 case ("INICIAR SESION"):
+                    this.iniciarSesion();
                 break;
                 case ("CREAR TAREA"):
                 break;
@@ -45,18 +57,63 @@ public class Controlador implements ActionListener
                 break;
                 case ("GENERAR INFORME"):
                 break;
-                
+                case("CREAR GRUPO DE CLIENTES"):
+                    this.crearGrupoClientes();
+                break;
             }
-            
         }
     }
-            
-        public void creaUsuario()
+    
+    public void crearGrupoClientes()
+    {
+        GrupoDeClientes nuevo = new GrupoDeClientes();
+        String nombreGrupo = this.ventanaPrincipal.ingresaDato("Ingrese nombre del grupo:");
+        nuevo.setNombre_grupo(nombreGrupo);
+        this.bd.agregaGrupoClientes(nuevo);
+    }
+    
+    public void crearTarea()
+    {
+        Tarea tarea=new Tarea();       
+    }        
+    
+    public void creaUsuario()
+    {
+        Usuario nuevoUsuario= new Usuario();
+        VentanaUsuarioNuevo ventanaUsuarioNuevo= new VentanaUsuarioNuevo(this.ventanaPrincipal,true,nuevoUsuario,this.bd);
+    }
+    
+    public void iniciarSesion() 
+    {
+        String usuario = this.ventanaPrincipal.getJtfUsuario().getText();
+        String contr = this.ventanaPrincipal.getJtfContrasena().getText();        
+        this.usuarioActual = this.bd.compruebaUsuario(usuario,contr);
+        if (this.usuarioActual == null)
         {
-            Usuario nuevoUsuario= new Usuario();
-            VentanaUsuarioNuevo ventanaUsuarioNuevo= new VentanaUsuarioNuevo(this.ventanaPrincipal,true,nuevoUsuario);
-            
             
         }
-    
+        else
+        {
+            this.ventanaPrincipal.panelTareas(this.bd.tareasUsuario(this.usuarioActual));
+        }
+    }
+
+    public void setUsuarioActual(Usuario usuarioActual)
+    {
+        this.usuarioActual = usuarioActual;
+    }
+
+    public Usuario getUsuarioActual()
+    {
+        return usuarioActual;
+    }
+
+    @Override
+    public void update(Observable observable, Object object)
+    {
+        // TODO Implement this method
+        this.ventanaPrincipal.panelJcbGrupos(this.bd.getGrupoClientes());
+        
+    }
 }
+

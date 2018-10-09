@@ -1,8 +1,22 @@
 
 package vista;
 
+import controlador.Controlador;
+
 import java.awt.Dimension;
 
+import java.util.ArrayList;
+
+import java.util.HashMap;
+import java.util.Iterator;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import modelo.Cliente;
+import modelo.GrupoDeClientes;
 import modelo.Tarea;
 
 /**
@@ -11,11 +25,21 @@ import modelo.Tarea;
  */
 public class VentanaPrincipal extends javax.swing.JFrame
 {
-
     /** Creates new form VentanaPrincipal */
-    public VentanaPrincipal()
+    public VentanaPrincipal(Controlador c)
     {
         initComponents();
+        this.jbCreaTarea.addActionListener(c);
+        this.jbCreaUsuario.addActionListener(c);
+        this.jbGeneraInf.addActionListener(c);
+        this.jbIniciaSesion.addActionListener(c);
+        this.jbModificarTarea.addActionListener(c);
+        this.jbCrearGrupos.addActionListener(c);
+        this.jbIniciaSesion.addActionListener(c);
+        this.jbCrearCliente.addActionListener(c);
+        this.jbElimCliente.addActionListener(c);
+        this.setSize(500,500);
+        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -45,15 +69,24 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jPanel10 = new javax.swing.JPanel();
         jcbInformes = new javax.swing.JComboBox<>();
         jbGeneraInf = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jbCrearCliente = new javax.swing.JButton();
+        jbElimCliente = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        jbCrearGrupos = new javax.swing.JButton();
+        jcbGrupos = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlTareas = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtaInformes = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jlClientes = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 3));
 
         jPanel2.setBackground(new java.awt.Color(153, 204, 255));
         jPanel2.setLayout(new java.awt.GridLayout(3, 2));
@@ -126,9 +159,35 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         jPanel1.add(jPanel3);
 
+        jPanel9.setLayout(new java.awt.GridLayout(2, 0));
+
+        jbCrearCliente.setText("Crear Cliente");
+        jPanel12.add(jbCrearCliente);
+
+        jbElimCliente.setText("Eliminar Cliente");
+        jbElimCliente.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jbElimClienteActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jbElimCliente);
+
+        jPanel9.add(jPanel12);
+
+        jbCrearGrupos.setText("Crear Grupo de Clientes");
+        jPanel13.add(jbCrearGrupos);
+
+        jPanel13.add(jcbGrupos);
+
+        jPanel9.add(jPanel13);
+
+        jPanel1.add(jPanel9);
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel7.setLayout(new java.awt.GridLayout(1, 3));
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tareas"));
         jScrollPane2.setToolTipText("");
@@ -144,6 +203,12 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jScrollPane1.setViewportView(jtaInformes);
 
         jPanel7.add(jScrollPane1);
+
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
+
+        jScrollPane3.setViewportView(jlClientes);
+
+        jPanel7.add(jScrollPane3);
 
         getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
@@ -165,90 +230,19 @@ public class VentanaPrincipal extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfContrasenaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing
-                                                                   .UIManager
-                                                                   .getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing
-                         .UIManager
-                         .setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex)
-        {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaPrincipal.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaPrincipal.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaPrincipal.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaPrincipal.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jbElimClienteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jbElimClienteActionPerformed
+    {//GEN-HEADEREND:event_jbElimClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbElimClienteActionPerformed
 
-        /* Create and display the form */
-        java.awt
-            .EventQueue
-            .invokeLater(new Runnable()
-            {
-                public void run()
-                {
-                    new VentanaPrincipal().setVisible(true);
-                }
-            });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -256,18 +250,97 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbCreaTarea;
     private javax.swing.JButton jbCreaUsuario;
+    private javax.swing.JButton jbCrearCliente;
+    private javax.swing.JButton jbCrearGrupos;
+    private javax.swing.JButton jbElimCliente;
     private javax.swing.JButton jbGeneraInf;
     private javax.swing.JButton jbIniciaSesion;
     private javax.swing.JButton jbModificarTarea;
+    private javax.swing.JComboBox<GrupoDeClientes> jcbGrupos;
     private javax.swing.JComboBox<String> jcbInformes;
+    private javax.swing.JList<Cliente> jlClientes;
     private javax.swing.JList<Tarea> jlTareas;
     private javax.swing.JTextArea jtaInformes;
     private javax.swing.JTextField jtfContrasena;
     private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 
+    public void panelTareas(ArrayList<Tarea> tareas)
+    {
+        this.jlTareas.removeAll();
+        DefaultListModel<Tarea> model = new DefaultListModel<Tarea>();
+        Iterator<Tarea> it = tareas.iterator();
+        while (it.hasNext())
+        {
+            model.addElement(it.next());
+        }
+        this.jlTareas.setModel(model);
+        this.jlTareas.updateUI();
+    }
+    
+    public void panelJlistClientes(ArrayList<Cliente> clientes)
+    {
+        ArrayList<Cliente> aux =null;
+        this.jlClientes.removeAll();
+        DefaultListModel model = new DefaultListModel();
+        Iterator<Cliente> it = clientes.iterator();
+        while (it.hasNext())
+        {
+            model.addElement(it.next());
+        }
+        this.jlClientes.setModel(model);
+        this.jlClientes.updateUI();
+    }
+    
+    public void panelJcbGrupos(HashMap<String,GrupoDeClientes> grupos)
+    {
+        this.jcbGrupos.removeAll();
+        Iterator<GrupoDeClientes> it = grupos.values().iterator();
+        while (it.hasNext())
+        {
+            this.jcbGrupos.addItem(it.next());
+        }
+        this.jcbGrupos.updateUI();
+    }
+    
+    public String ingresaDato(String mensaje)
+    {
+        return JOptionPane.showInputDialog(this, mensaje);
+    }
+    
+    public void setJtfContrasena(JTextField jtfContrasena)
+    {
+        this.jtfContrasena = jtfContrasena;
+    }
+
+    public JTextField getJtfContrasena() 
+    {
+        return jtfContrasena;
+    }
+
+    public void setJtfUsuario(JTextField jtfUsuario) 
+    {
+        this.jtfUsuario = jtfUsuario;
+    }
+
+    public JTextField getJtfUsuario() 
+    {
+        return jtfUsuario;
+    }
+
+    public void setJcbGrupos(JComboBox<GrupoDeClientes> jcbGrupos)
+    {
+        this.jcbGrupos = jcbGrupos;
+    }
+
+    public JComboBox<GrupoDeClientes> getJcbGrupos()
+    {
+        return jcbGrupos;
+    }
 }
