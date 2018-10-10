@@ -1,9 +1,57 @@
 package modelo;
 
-public class CerradaState extends Estado
+import java.io.Serializable;
+
+public class CerradaState extends Estado implements Serializable
 {
+    private Tarea tarea;
+    
     public CerradaState()
     {
-        super();
+        
+    }
+    
+    public CerradaState(Tarea tarea)
+    {
+        super("Cerrada");
+        this.tarea = tarea;
+    }
+
+    @Override
+    public void abiertaPausa()
+    {
+        // TODO Implement this method
+    }
+
+    @Override
+    public void abiertaCerrada()
+    {
+        // TODO Implement this method
+    }
+
+    @Override
+    public void pausaAbierta()
+    {
+        // TODO Implement this method
+    }
+
+    @Override
+    public void pausaCerrada()
+    {
+        // TODO Implement this method
+    }
+
+    @Override
+    public boolean cambiarEstado()
+    {
+        // TODO Implement this method
+        return false;
+    }
+
+    @Override
+    public String cambioPosible()
+    {
+        // TODO Implement this method
+        return null;
     }
 }

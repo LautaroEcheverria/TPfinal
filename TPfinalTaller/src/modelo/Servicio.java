@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Servicio implements Serializable
 {
-    private String descripción;
+    private String descripcion;
     private String tipo;
     private double costo;
     
@@ -13,14 +13,22 @@ public class Servicio implements Serializable
         super();
     }
 
-    public void setDescripción(String descripción)
+
+    @Override
+    public String toString()
     {
-        this.descripción = descripción;
+        // TODO Implement this method
+        return this.descripcion+" Tipo: "+this.tipo+" Costo: "+this.costo;
     }
 
-    public String getDescripción()
+    public void setDescripcion(String descripcion)
     {
-        return descripción;
+        this.descripcion = descripcion;
+    }
+
+    public String getDescripcion()
+    {
+        return descripcion;
     }
 
     public void setTipo(String tipo)

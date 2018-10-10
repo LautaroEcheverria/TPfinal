@@ -1,14 +1,24 @@
 package modelo;
 
-public class Cliente extends Persona
+import java.io.Serializable;
+
+public class Cliente extends Persona implements Serializable
 {
     private String cuit;
     private String razon_social;
-    private String grupos_de_clientes;
+    private GrupoDeClientes grupos_de_clientes;
     
     public Cliente()
     {
         super();
+    }
+
+
+    @Override
+    public String toString()
+    {
+        // TODO Implement this method
+        return "NyA: "+this.getNombre_apellido()+" CUIT: "+this.cuit+" GrupoCliente: "+this.grupos_de_clientes;
     }
 
     public void setCuit (String cuit)
@@ -31,12 +41,12 @@ public class Cliente extends Persona
         return razon_social;
     }
 
-    public void setGrupos_de_clientes(String grupos_de_clientes)
+    public void setGrupos_de_clientes(GrupoDeClientes grupos_de_clientes)
     {
         this.grupos_de_clientes = grupos_de_clientes;
     }
 
-    public String getGrupos_de_clientes()
+    public GrupoDeClientes getGrupos_de_clientes()
     {
         return grupos_de_clientes;
     }

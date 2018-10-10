@@ -10,12 +10,19 @@ import javax.swing.JButton;
 
 import javax.swing.JOptionPane;
 
+import modelo.AbiertaState;
 import modelo.BaseDatos;
+import modelo.CerradaState;
+import modelo.Cliente;
 import modelo.GrupoDeClientes;
+import modelo.PausaState;
+import modelo.Servicio;
 import modelo.Tarea;
 import modelo.Usuario;
 
+import vista.VentanaNuevoCliente;
 import vista.VentanaPrincipal;
+import vista.VentanaServicio;
 import vista.VentanaUsuarioNuevo;
 
 public class Controlador implements ActionListener,Observer
@@ -31,6 +38,8 @@ public class Controlador implements ActionListener,Observer
         this.bd.addObserver(this);
         this.ventanaPrincipal = new VentanaPrincipal(this);
         this.ventanaPrincipal.panelJcbGrupos(this.bd.getGrupoClientes());
+        this.ventanaPrincipal.panelJListServicios(this.bd.arrayServicios());
+        this.ventanaPrincipal.panelJlistClientes(this.bd.arrayClientes());
     }
 
     @Override
@@ -50,18 +59,74 @@ public class Controlador implements ActionListener,Observer
                     this.iniciarSesion();
                 break;
                 case ("CREAR TAREA"):
+                    this.crearTarea();
                 break;
                 case("ELIMINAR TAREA"):
+                    this.eliminaTarea();
                 break;
-                case("MODIFICAR ESTADO TAREA"):
+                case("MODIFICAR TAREA"):
+                    this.modificaTarea();
                 break;
                 case ("GENERAR INFORME"):
                 break;
                 case("CREAR GRUPO DE CLIENTES"):
                     this.crearGrupoClientes();
                 break;
+                case("CREAR CLIENTE"):
+                    this.crearCliente();
+                break;
+                case("ELIMINAR CLIENTE"):
+                    this.eliminarCliente();
+                break;
+                case("CREAR SERVICIO"):
+                    this.creaServicio();
+                break;
+                case("ELIMINAR SERVICIO"):
+                    this.elimServicio();
+                break;
             }
         }
+    }
+    
+    public void modificaTarea()
+    {
+        Tarea seleccionada = this.ventanaPrincipal.getJlTareas().getSelectedValue();
+        if (seleccionada.getEstado_actual().cambiarEstado())
+        {
+            String estado = this.ventanaPrincipal.ingresaDato("Ingrese estado a cambiar:("+seleccionada.getEstado_actual().cambioPosible()+")");
+            if (estado.equalsIgnoreCase("ABIERTA"))
+                seleccionada.setEstado_actual(new AbiertaState(seleccionada));
+            else
+                if (estado.equalsIgnoreCase("PAUSA"))
+                    seleccionada.setEstado_actual(new PausaState(seleccionada));
+                else
+                    seleccionada.setEstado_actual(new CerradaState(seleccionada));    
+            this.bd.guardarBase();
+        }
+        else
+            JOptionPane.showMessageDialog(this.ventanaPrincipal, "No se puede cambiar estado");
+    }
+    public void creaServicio()
+    {
+        Servicio nuevo = new Servicio();
+        VentanaServicio ventanaAux = new VentanaServicio(this.ventanaPrincipal,true,nuevo,this.bd);
+    }
+    
+    public void elimServicio()
+    {
+        this.bd.elimServicio(this.ventanaPrincipal.getJlServicios().getSelectedValue());
+    }
+    
+    public void crearCliente()
+    {
+        Cliente nuevoCliente = new Cliente();
+        nuevoCliente.setGrupos_de_clientes((GrupoDeClientes)this.ventanaPrincipal.getJcbGrupos().getSelectedItem());
+        VentanaNuevoCliente ventanaAux = new VentanaNuevoCliente(this.ventanaPrincipal,true,nuevoCliente,this.bd);
+    }
+    
+    public void eliminarCliente()
+    {
+        this.bd.elimCliente(this.ventanaPrincipal.getJlClientes().getSelectedValue());
     }
     
     public void crearGrupoClientes()
@@ -74,13 +139,23 @@ public class Controlador implements ActionListener,Observer
     
     public void crearTarea()
     {
-        Tarea tarea=new Tarea();       
+        Tarea tarea=new Tarea();    
+        tarea.setColaborador(this.usuarioActual);
+        tarea.setCliente(this.ventanaPrincipal.getJlClientes().getSelectedValue());
+        tarea.setServicio(this.ventanaPrincipal.getJlServicios().getSelectedValue());
+        tarea.setEstado_actual(new AbiertaState(tarea));
+        this.bd.agregaTarea(tarea);
     }        
+    
+    public void eliminaTarea()
+    {
+        this.bd.elimTarea(this.ventanaPrincipal.getJlTareas().getSelectedValue());
+    }
     
     public void creaUsuario()
     {
         Usuario nuevoUsuario= new Usuario();
-        VentanaUsuarioNuevo ventanaUsuarioNuevo= new VentanaUsuarioNuevo(this.ventanaPrincipal,true,nuevoUsuario,this.bd);
+        VentanaUsuarioNuevo ventanaAux= new VentanaUsuarioNuevo(this.ventanaPrincipal,true,nuevoUsuario,this.bd);
     }
     
     public void iniciarSesion() 
@@ -95,6 +170,10 @@ public class Controlador implements ActionListener,Observer
         else
         {
             this.ventanaPrincipal.panelTareas(this.bd.tareasUsuario(this.usuarioActual));
+            if (this.usuarioActual.getPerfil().equalsIgnoreCase("ADMINISTRADOR"))
+                this.ventanaPrincipal.botonesAdministrador();
+            else
+                this.ventanaPrincipal.botonesColaborador();
         }
     }
 
@@ -113,7 +192,10 @@ public class Controlador implements ActionListener,Observer
     {
         // TODO Implement this method
         this.ventanaPrincipal.panelJcbGrupos(this.bd.getGrupoClientes());
-        
+        this.ventanaPrincipal.panelJListServicios(this.bd.arrayServicios());
+        this.ventanaPrincipal.panelJlistClientes(this.bd.arrayClientes());
+        if (this.usuarioActual != null)
+            this.ventanaPrincipal.panelTareas(this.bd.tareasUsuario(this.usuarioActual));
     }
 }
 

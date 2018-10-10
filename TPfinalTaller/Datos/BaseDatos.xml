@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_131" class="java.beans.XMLDecoder">
+ <object class="modelo.BaseDatos" id="BaseDatos0">
+  <void property="clientes">
+   <void method="put">
+    <string>Cliente 1</string>
+    <object class="modelo.Cliente" id="Cliente0">
+     <void property="cuit">
+      <string>111</string>
+     </void>
+     <void property="email">
+      <string>111</string>
+     </void>
+     <void property="grupos_de_clientes">
+      <object class="modelo.GrupoDeClientes" id="GrupoDeClientes0">
+       <void property="nombre_grupo">
+        <string>Cliente A</string>
+       </void>
+      </object>
+     </void>
+     <void property="nombre_apellido">
+      <string>Cliente 1</string>
+     </void>
+     <void property="razon_social">
+      <string>111</string>
+     </void>
+     <void property="telefono">
+      <string>111</string>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="grupoClientes">
+   <void method="put">
+    <string>Cliente A</string>
+    <object idref="GrupoDeClientes0"/>
+   </void>
+  </void>
+  <void property="servicios">
+   <void method="put">
+    <string>Servicio 1</string>
+    <object class="modelo.Servicio" id="Servicio0">
+     <void property="costo">
+      <double>200.0</double>
+     </void>
+     <void property="descripcion">
+      <string>Servicio 1</string>
+     </void>
+     <void property="tipo">
+      <string>Fijo</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <string>Servicio 2</string>
+    <object class="modelo.Servicio">
+     <void property="costo">
+      <double>20.0</double>
+     </void>
+     <void property="descripcion">
+      <string>Servicio 2</string>
+     </void>
+     <void property="tipo">
+      <string>Por hora</string>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="tareas">
+   <void method="add">
+    <object class="modelo.Tarea" id="Tarea0">
+     <void property="cliente">
+      <object idref="Cliente0"/>
+     </void>
+     <void property="colaborador">
+      <object class="modelo.Usuario" id="Usuario0">
+       <void property="contrasenia">
+        <string>1234</string>
+       </void>
+       <void property="email">
+        <string>f</string>
+       </void>
+       <void property="nombre_apellido">
+        <string>Franco Rolando</string>
+       </void>
+       <void property="nombre_de_usuario">
+        <string>franco</string>
+       </void>
+       <void property="perfil">
+        <string>Administrador</string>
+       </void>
+       <void property="telefono">
+        <string>123</string>
+       </void>
+      </object>
+     </void>
+     <void property="estado_actual">
+      <object class="modelo.CerradaState">
+       <void property="estado">
+        <string>Cerrada</string>
+       </void>
+      </object>
+     </void>
+     <void property="fecha_inicio">
+      <void property="time">
+       <object class="java.util.Date">
+        <long>1539152802271</long>
+       </object>
+      </void>
+     </void>
+     <void property="servicio">
+      <object idref="Servicio0"/>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="usuarios">
+   <void method="put">
+    <string>franco</string>
+    <object idref="Usuario0"/>
+   </void>
+  </void>
+ </object>
+</java>

@@ -12,11 +12,13 @@ import java.util.Iterator;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import modelo.Cliente;
 import modelo.GrupoDeClientes;
+import modelo.Servicio;
 import modelo.Tarea;
 
 /**
@@ -37,9 +39,128 @@ public class VentanaPrincipal extends javax.swing.JFrame
         this.jbCrearGrupos.addActionListener(c);
         this.jbIniciaSesion.addActionListener(c);
         this.jbCrearCliente.addActionListener(c);
+        this.jbElimTarea.addActionListener(c);
         this.jbElimCliente.addActionListener(c);
-        this.setSize(500,500);
+        this.jbCreaServ.addActionListener(c);
+        this.jbElimServ.addActionListener(c);
+        this.setSize(1200,800);
+        this.sesionActualNul();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+    public void panelTareas(ArrayList<Tarea> tareas)
+    {
+        if (tareas != null)
+        {
+            this.jlTareas.removeAll();
+            DefaultListModel<Tarea> model = new DefaultListModel<Tarea>();
+            Iterator<Tarea> it = tareas.iterator();
+            while (it.hasNext())
+            {
+                model.addElement(it.next());
+            }
+            this.jlTareas.setModel(model);
+            this.jlTareas.updateUI();
+        }
+    }
+    
+    public void panelJlistClientes(ArrayList<Cliente> clientes)
+    {
+        if (clientes != null)
+        {
+            this.jlClientes.removeAll();
+            DefaultListModel model = new DefaultListModel();
+            Iterator<Cliente> it = clientes.iterator();
+            while (it.hasNext())
+            {
+                model.addElement(it.next());
+            }
+            this.jlClientes.setModel(model);
+            this.jlClientes.updateUI();
+        }
+    }
+    
+    public void panelJListServicios(ArrayList<Servicio> servicios)
+    {
+        if (servicios != null)
+        {
+            this.jlServicios.removeAll();
+            DefaultListModel model = new DefaultListModel();
+            Iterator<Servicio> it = servicios.iterator();
+            while (it.hasNext())
+            {
+                model.addElement(it.next());
+            }
+            this.jlServicios.setModel(model);
+            this.jlServicios.updateUI();
+        }
+    }
+    
+    public void panelJcbGrupos(HashMap<String,GrupoDeClientes> grupos)
+    {
+        if (grupos != null)
+        {
+            this.jcbGrupos.removeAllItems();
+            Iterator<GrupoDeClientes> it = grupos.values().iterator();
+            while (it.hasNext())
+            {
+                this.jcbGrupos.addItem(it.next());
+            }
+        }
+    }
+    
+    public String ingresaDato(String mensaje)
+    {
+        return JOptionPane.showInputDialog(this, mensaje);
+    }
+    
+    public void botonesAdministrador()
+    {
+        this.jbCreaTarea.setEnabled(true);
+        this.jbCreaUsuario.setEnabled(true);
+        this.jbGeneraInf.setEnabled(true);
+        this.jbIniciaSesion.setEnabled(true);
+        this.jbElimTarea.setEnabled(true);
+        this.jbModificarTarea.setEnabled(true);
+        this.jbCrearGrupos.setEnabled(true);
+        this.jbIniciaSesion.setEnabled(true);
+        this.jbCrearCliente.setEnabled(true);
+        this.jbElimCliente.setEnabled(true);
+        this.jbCreaServ.setEnabled(true);
+        this.jbElimServ.setEnabled(true);
+    }
+    
+    public void botonesColaborador()
+    {
+        this.jbCreaTarea.setEnabled(true);
+        this.jbCreaUsuario.setEnabled(false);
+        this.jbGeneraInf.setEnabled(false);
+        this.jbIniciaSesion.setEnabled(true);
+        this.jbElimTarea.setEnabled(true);
+        this.jbModificarTarea.setEnabled(true);
+        this.jbCrearGrupos.setEnabled(false);
+        this.jbIniciaSesion.setEnabled(true);
+        this.jbCrearCliente.setEnabled(false);
+        this.jbElimCliente.setEnabled(false);
+        this.jbCreaServ.setEnabled(false);
+        this.jbElimServ.setEnabled(false);
+    }
+    
+    public void sesionActualNul()
+    {
+        this.jbCreaTarea.setEnabled(false);
+        this.jbCreaUsuario.setEnabled(true);
+        this.jbGeneraInf.setEnabled(false);
+        this.jbIniciaSesion.setEnabled(false);
+        this.jbModificarTarea.setEnabled(false);
+        this.jbElimTarea.setEnabled(false);
+        this.jbCrearGrupos.setEnabled(false);
+        this.jbIniciaSesion.setEnabled(true);
+        this.jbCrearCliente.setEnabled(false);
+        this.jbElimCliente.setEnabled(false);
+        this.jbCreaServ.setEnabled(false);
+        this.jbElimServ.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -66,6 +187,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jPanel8 = new javax.swing.JPanel();
         jbCreaTarea = new javax.swing.JButton();
         jbModificarTarea = new javax.swing.JButton();
+        jbElimTarea = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jcbInformes = new javax.swing.JComboBox<>();
         jbGeneraInf = new javax.swing.JButton();
@@ -76,6 +198,9 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jPanel13 = new javax.swing.JPanel();
         jbCrearGrupos = new javax.swing.JButton();
         jcbGrupos = new javax.swing.JComboBox<>();
+        jPanel11 = new javax.swing.JPanel();
+        jbCreaServ = new javax.swing.JButton();
+        jbElimServ = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlTareas = new javax.swing.JList<>();
@@ -83,10 +208,12 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jtaInformes = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jlClientes = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jlServicios = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 3));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 4));
 
         jPanel2.setBackground(new java.awt.Color(153, 204, 255));
         jPanel2.setLayout(new java.awt.GridLayout(3, 2));
@@ -140,6 +267,9 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jbModificarTarea.setText("Modificar Tarea");
         jPanel8.add(jbModificarTarea);
 
+        jbElimTarea.setText("Eliminar Tarea");
+        jPanel8.add(jbElimTarea);
+
         jPanel3.add(jPanel8);
 
         jcbInformes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Total de tareas", "Tareas Colaborador", "Estado de tareas", "Tareas Usuario" }));
@@ -185,9 +315,17 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         jPanel1.add(jPanel9);
 
+        jbCreaServ.setText("Crear Servicio");
+        jPanel11.add(jbCreaServ);
+
+        jbElimServ.setText("Eliminar Servicio");
+        jPanel11.add(jbElimServ);
+
+        jPanel1.add(jPanel11);
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 3));
+        jPanel7.setLayout(new java.awt.GridLayout(1, 4));
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tareas"));
         jScrollPane2.setToolTipText("");
@@ -209,6 +347,12 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jScrollPane3.setViewportView(jlClientes);
 
         jPanel7.add(jScrollPane3);
+
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder("Servicios"));
+
+        jScrollPane4.setViewportView(jlServicios);
+
+        jPanel7.add(jScrollPane4);
 
         getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
@@ -241,6 +385,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
@@ -254,65 +399,29 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JButton jbCreaServ;
     private javax.swing.JButton jbCreaTarea;
     private javax.swing.JButton jbCreaUsuario;
     private javax.swing.JButton jbCrearCliente;
     private javax.swing.JButton jbCrearGrupos;
     private javax.swing.JButton jbElimCliente;
+    private javax.swing.JButton jbElimServ;
+    private javax.swing.JButton jbElimTarea;
     private javax.swing.JButton jbGeneraInf;
     private javax.swing.JButton jbIniciaSesion;
     private javax.swing.JButton jbModificarTarea;
     private javax.swing.JComboBox<GrupoDeClientes> jcbGrupos;
     private javax.swing.JComboBox<String> jcbInformes;
     private javax.swing.JList<Cliente> jlClientes;
+    private javax.swing.JList<Servicio> jlServicios;
     private javax.swing.JList<Tarea> jlTareas;
     private javax.swing.JTextArea jtaInformes;
     private javax.swing.JTextField jtfContrasena;
     private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 
-    public void panelTareas(ArrayList<Tarea> tareas)
-    {
-        this.jlTareas.removeAll();
-        DefaultListModel<Tarea> model = new DefaultListModel<Tarea>();
-        Iterator<Tarea> it = tareas.iterator();
-        while (it.hasNext())
-        {
-            model.addElement(it.next());
-        }
-        this.jlTareas.setModel(model);
-        this.jlTareas.updateUI();
-    }
     
-    public void panelJlistClientes(ArrayList<Cliente> clientes)
-    {
-        ArrayList<Cliente> aux =null;
-        this.jlClientes.removeAll();
-        DefaultListModel model = new DefaultListModel();
-        Iterator<Cliente> it = clientes.iterator();
-        while (it.hasNext())
-        {
-            model.addElement(it.next());
-        }
-        this.jlClientes.setModel(model);
-        this.jlClientes.updateUI();
-    }
-    
-    public void panelJcbGrupos(HashMap<String,GrupoDeClientes> grupos)
-    {
-        this.jcbGrupos.removeAll();
-        Iterator<GrupoDeClientes> it = grupos.values().iterator();
-        while (it.hasNext())
-        {
-            this.jcbGrupos.addItem(it.next());
-        }
-        this.jcbGrupos.updateUI();
-    }
-    
-    public String ingresaDato(String mensaje)
-    {
-        return JOptionPane.showInputDialog(this, mensaje);
-    }
     
     public void setJtfContrasena(JTextField jtfContrasena)
     {
@@ -322,6 +431,37 @@ public class VentanaPrincipal extends javax.swing.JFrame
     public JTextField getJtfContrasena() 
     {
         return jtfContrasena;
+    }
+
+
+    public void setJlClientes(JList<Cliente> jlClientes)
+    {
+        this.jlClientes = jlClientes;
+    }
+
+    public JList<Cliente> getJlClientes()
+    {
+        return jlClientes;
+    }
+
+    public void setJlServicios(JList<Servicio> jlServicios)
+    {
+        this.jlServicios = jlServicios;
+    }
+
+    public JList<Servicio> getJlServicios()
+    {
+        return jlServicios;
+    }
+
+    public void setJlTareas(JList<Tarea> jlTareas)
+    {
+        this.jlTareas = jlTareas;
+    }
+
+    public JList<Tarea> getJlTareas()
+    {
+        return jlTareas;
     }
 
     public void setJtfUsuario(JTextField jtfUsuario) 

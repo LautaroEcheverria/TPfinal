@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Usuario extends Persona implements Serializable
 {
     private String nombre_de_usuario;
-    private String contraseña;
+    private String contrasenia;
     private String perfil;
 
     public Usuario()
@@ -13,12 +13,11 @@ public class Usuario extends Persona implements Serializable
         super();
     }
 
-    public Usuario(String nombre_apellido, String email, String telefono,String nombre_de_usuario, String contraseña)
+    @Override
+    public String toString()
     {
         // TODO Implement this method
-        super(nombre_apellido, email, telefono);
-        this.nombre_de_usuario = nombre_de_usuario;
-        this.contraseña = contraseña;
+        return this.nombre_de_usuario+" Perfil: "+this.perfil;
     }
 
     public void setPerfil(String perfil) {
@@ -39,14 +38,14 @@ public class Usuario extends Persona implements Serializable
         return nombre_de_usuario;
     }
 
-    public void setContraseña(String contraseña)
+    public void setContrasenia(String contrasenia)
     {
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
     }
 
-    public String getContraseña()
+    public String getContrasenia()
     {
-        return contraseña;
+        return contrasenia;
     }
 }
 

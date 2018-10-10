@@ -17,8 +17,17 @@ public class Tarea implements Serializable
     public Tarea()
     {
         super();
+        this.fecha_inicio = new GregorianCalendar();
     }
-    
+
+
+    @Override
+    public String toString()
+    {
+        // TODO Implement this method
+        return "Estado: "+this.estado_actual.getEstado()+"Usuario: "+this.colaborador+" Cliente: "+this.cliente+" Servicio: "+this.servicio;
+    }
+
     public void setColaborador(Usuario colaborador)
     {
         this.colaborador = colaborador;
