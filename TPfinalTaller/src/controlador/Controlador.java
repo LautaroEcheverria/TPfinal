@@ -14,6 +14,7 @@ import modelo.AbiertaState;
 import modelo.BaseDatos;
 import modelo.CerradaState;
 import modelo.Cliente;
+import modelo.Estado;
 import modelo.GrupoDeClientes;
 import modelo.PausaState;
 import modelo.Servicio;
@@ -68,6 +69,7 @@ public class Controlador implements ActionListener,Observer
                     this.modificaTarea();
                 break;
                 case ("GENERAR INFORME"):
+                    this.generaInforme();
                 break;
                 case("CREAR GRUPO DE CLIENTES"):
                     this.crearGrupoClientes();
@@ -86,6 +88,23 @@ public class Controlador implements ActionListener,Observer
                 break;
             }
         }
+    }
+    
+    public void generaInforme()
+    {
+        String tipoInforme = (String)this.ventanaPrincipal.getJcbInformes().getSelectedItem();
+        switch (tipoInforme.toUpperCase())
+        {
+        case("Total de tareas"):
+            break;
+        case("Tareas Colaborador"):
+            break;
+        case("Estado de tareas"):
+            break;
+        case("Tareas Usuario"):
+            break;
+        }
+        
     }
     
     public void modificaTarea()

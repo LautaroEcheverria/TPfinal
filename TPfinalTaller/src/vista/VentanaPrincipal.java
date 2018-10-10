@@ -43,6 +43,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         this.jbElimCliente.addActionListener(c);
         this.jbCreaServ.addActionListener(c);
         this.jbElimServ.addActionListener(c);
+        this.jtaInformes.setEditable(false);
         this.setSize(1200,800);
         this.sesionActualNul();
         this.setLocationRelativeTo(null);
@@ -61,7 +62,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 model.addElement(it.next());
             }
             this.jlTareas.setModel(model);
-            this.jlTareas.updateUI();
+            this.jlTareas.repaint();
         }
     }
     
@@ -77,7 +78,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 model.addElement(it.next());
             }
             this.jlClientes.setModel(model);
-            this.jlClientes.updateUI();
+            this.jlClientes.repaint();
         }
     }
     
@@ -93,7 +94,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 model.addElement(it.next());
             }
             this.jlServicios.setModel(model);
-            this.jlServicios.updateUI();
+            this.jlServicios.repaint();
         }
     }
     
@@ -482,5 +483,16 @@ public class VentanaPrincipal extends javax.swing.JFrame
     public JComboBox<GrupoDeClientes> getJcbGrupos()
     {
         return jcbGrupos;
+    }
+
+
+    public void setJcbInformes(JComboBox<String> jcbInformes)
+    {
+        this.jcbInformes = jcbInformes;
+    }
+
+    public JComboBox<String> getJcbInformes()
+    {
+        return jcbInformes;
     }
 }
