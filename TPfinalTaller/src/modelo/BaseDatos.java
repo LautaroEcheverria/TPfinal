@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Observable;
@@ -26,10 +27,142 @@ public class BaseDatos extends Observable implements Serializable
         tareas = new ArrayList<Tarea>();
     }
     
+    public void cambioCont(Usuario actual,String contra)
+    {
+        Usuario aux = this.usuarios.get(actual.getNombre_de_usuario());
+        aux.setContrasenia(contra);
+        this.guardarBase();
+    }
+    
+    public String tareasCliente(Cliente cliente, GregorianCalendar inicio, GregorianCalendar fin)
+    {
+        String retorno="";    
+        Iterator<Tarea> it = this.tareas.iterator();
+        retorno+= cliente.toString()+"\n";
+        retorno+= "Tarea de servicio\tTotal de horas\tImporte\n";
+        double costoTotal=0;;
+        while (it.hasNext())
+        {
+            Tarea tarea = it.next();
+            if (tarea.getCliente() == cliente && tarea.getEstado_actual().getEstado().equalsIgnoreCase("CERRADA"))
+            {    
+                if (!((tarea.getFecha_cierre()!= null && tarea.getFecha_cierre().before(inicio)) || 
+                     tarea.getFecha_inicio().after(fin)))
+                {
+                    double costoTarea = tarea.getCosto_total();
+                    retorno+= tarea.getServicio().getDescripcion()+" "+
+                              tarea.cantidadHoras()+" "+
+                              costoTarea+"\n";
+                    costoTotal += costoTarea;
+                }
+            }
+        }
+        retorno += "IMPORTE TOTAL: $"+costoTotal;
+        return retorno;
+    }
+    
+    public String tareasColaborador(Usuario usuario, GregorianCalendar inicio, GregorianCalendar fin)
+    {
+        String retorno="";    
+        Iterator<Cliente> it = this.clientes.values().iterator();
+        retorno+= usuario.toString()+"\n";
+        retorno+= "Cliente\tTarea de servicio\tTotal de horas\n";
+        while (it.hasNext())
+        {
+            Cliente cliente = it.next();
+            retorno += cliente.getNombre_apellido()+"\n";
+            Iterator<Tarea> it2 = this.tareas.iterator();
+            double totalHoras=0;
+            while (it2.hasNext())
+            {
+                Tarea tarea = it2.next();
+                if (tarea.getCliente() == cliente && tarea.getColaborador() == usuario)
+                    if (!((tarea.getFecha_cierre()!= null && tarea.getFecha_cierre().before(inicio)) || 
+                            tarea.getFecha_inicio().after(fin)))
+                    {
+                        double horasTarea = tarea.cantidadHoras();
+                        retorno+= tarea.getServicio().getDescripcion()+" "+
+                                  horasTarea+"\n";
+                        totalHoras += horasTarea;
+                    }
+            }  
+            retorno += "\tTOTAL HS: "+totalHoras+"\n";
+        }
+        return retorno;
+    }
+    
+    public String tareasEstado(Usuario usuario)
+    {
+        String retorno="";    
+        Iterator<Tarea> it = this.tareas.iterator();
+        retorno+= "Colaborador Cliente Tareas de Servicio Inicio Estado Horas Acumuladas\n";
+        while (it.hasNext())
+        {
+            Tarea tarea = it.next();
+            if (usuario == null || (usuario != null && usuario == tarea.getColaborador()))
+            {
+                retorno+= tarea.getColaborador().getNombre_apellido()+" "+
+                          tarea.getCliente().getNombre_apellido()+" "+
+                          tarea.getServicio().getDescripcion()+" "+
+                          tarea.getFecha_inicio().get(GregorianCalendar.DATE)+"/"+
+                          tarea.getFecha_inicio().get(GregorianCalendar.MONTH)+"/"+
+                          tarea.getFecha_inicio().get(GregorianCalendar.YEAR)+"/"+
+                          tarea.getFecha_inicio().get(GregorianCalendar.MONTH)+" "+
+                          tarea.getFecha_inicio().get(GregorianCalendar.HOUR)+":"+
+                          tarea.getFecha_inicio().get(GregorianCalendar.MINUTE)+" "+
+                          tarea.getEstado_actual().getEstado()+" "+
+                          tarea.cantidadHoras()+"\n";
+            }
+        }
+        return retorno;
+    }
+    
+    public String tareasUsuario(Usuario usuario, GregorianCalendar inicio, GregorianCalendar fin, String estado)
+    {
+        String retorno="";    
+        Iterator<Tarea> it = this.tareas.iterator();
+        retorno+= usuario.toString()+"\n";
+        retorno+= "Cliente\tTarea de servicio\tInicio\tEstado\tHoras Acumuladas\n";
+        double totalHoras=0;
+        while (it.hasNext())
+        {
+            Tarea tarea = it.next();
+            if (tarea.getColaborador() == usuario && 
+                (estado.equalsIgnoreCase("TODOS") || estado.equalsIgnoreCase(tarea.getEstado_actual().getEstado())))
+                if (!((tarea.getFecha_cierre()!= null && tarea.getFecha_cierre().before(inicio)) || 
+                        tarea.getFecha_inicio().after(fin)))
+                {
+                    retorno+= tarea.getCliente().getNombre_apellido()+" "+
+                              tarea.getServicio().getDescripcion()+" "+
+                              tarea.getFecha_inicio().get(GregorianCalendar.DATE)+"/"+
+                              tarea.getFecha_inicio().get(GregorianCalendar.MONTH)+"/"+
+                              tarea.getFecha_inicio().get(GregorianCalendar.YEAR)+"/"+
+                              tarea.getFecha_inicio().get(GregorianCalendar.MONTH)+" "+
+                              tarea.getFecha_inicio().get(GregorianCalendar.HOUR)+":"+
+                              tarea.getFecha_inicio().get(GregorianCalendar.MINUTE)+" "+
+                              tarea.getEstado_actual().getEstado()+" "+
+                              tarea.cantidadHoras()+"\n";
+                }
+        }  
+        return retorno;
+    }
+    
     public void agregaTarea(Tarea nueva)
     {
-        this.tareas.add(nueva);
-        this.guardarBase();
+        Iterator<Tarea> it = this.tareas.iterator();
+        boolean ningunaAbierta = true;
+        while (it.hasNext() && ningunaAbierta)
+        {
+            Tarea tarea = it.next();
+            if (tarea.getColaborador() == nueva.getColaborador())
+                if (tarea.getEstado_actual().getEstado().equalsIgnoreCase("ABIERTA"))
+                    ningunaAbierta = false;
+        }
+        if (ningunaAbierta)
+        {
+            this.tareas.add(nueva);
+            this.guardarBase();
+        }
     }
     
     public void elimTarea(Tarea elim)
@@ -52,13 +185,13 @@ public class BaseDatos extends Observable implements Serializable
     
     public void agregaCliente(Cliente nuevo)
     {
-        this.clientes.put(nuevo.getNombre_apellido(), nuevo);
+        this.clientes.put(nuevo.getCuit(), nuevo);
         this.guardarBase();
     }
     
     public void elimCliente(Cliente elim)
     {
-        this.clientes.remove(elim.getNombre_apellido());
+        this.clientes.remove(elim.getCuit());
         this.guardarBase();
     }
     
@@ -111,6 +244,17 @@ public class BaseDatos extends Observable implements Serializable
     {
         ArrayList<Cliente> aux=new ArrayList<Cliente>();
         Iterator<Cliente> it = this.clientes.values().iterator();
+        while (it.hasNext())
+        {
+            aux.add(it.next());
+        }
+        return aux;
+    }
+    
+    public ArrayList<Usuario> arrayColaboradores()
+    {
+        ArrayList<Usuario> aux=new ArrayList<Usuario>();
+        Iterator<Usuario> it = this.usuarios.values().iterator();
         while (it.hasNext())
         {
             aux.add(it.next());

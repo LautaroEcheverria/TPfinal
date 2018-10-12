@@ -19,7 +19,28 @@ public class Tarea implements Serializable
         super();
         this.fecha_inicio = new GregorianCalendar();
     }
-
+    
+    public void tareaCerrada()
+    {
+        this.fecha_cierre = new GregorianCalendar();
+        if (this.servicio.getTipo().equalsIgnoreCase("POR HORA"))
+            this.costo_total = this.servicio.getCosto()*this.cantidadHoras();
+        else
+            this.costo_total = this.servicio.getCosto();
+    }
+    
+    public double cantidadHoras()
+    {
+        double cantHoras;
+        if (this.estado_actual.getEstado().equalsIgnoreCase("CERRADA"))
+            cantHoras = Math.ceil(this.fecha_cierre.getTimeInMillis()/1000/60/60-this.fecha_inicio.getTimeInMillis()/1000/60/60);
+        else
+        {
+            GregorianCalendar ahora = new GregorianCalendar();
+            cantHoras = Math.ceil(ahora.getTimeInMillis()/1000/60/60-this.fecha_inicio.getTimeInMillis()/1000/60/60);
+        }
+        return cantHoras;
+    }
 
     @Override
     public String toString()

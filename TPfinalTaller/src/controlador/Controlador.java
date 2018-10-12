@@ -3,6 +3,8 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -41,6 +43,7 @@ public class Controlador implements ActionListener,Observer
         this.ventanaPrincipal.panelJcbGrupos(this.bd.getGrupoClientes());
         this.ventanaPrincipal.panelJListServicios(this.bd.arrayServicios());
         this.ventanaPrincipal.panelJlistClientes(this.bd.arrayClientes());
+        this.ventanaPrincipal.panelJlistColaboradores(this.bd.arrayColaboradores());
     }
 
     @Override
@@ -86,8 +89,17 @@ public class Controlador implements ActionListener,Observer
                 case("ELIMINAR SERVICIO"):
                     this.elimServicio();
                 break;
+                case("CAMBIAR CONTRASEÑA"):
+                    this.cambCont();
+                break;
             }
         }
+    }
+    
+    public void cambCont()
+    {
+        String nueva = this.ventanaPrincipal.ingresaDato("Ingrese nueva contraseña:");
+        this.bd.cambioCont(this.usuarioActual,nueva);
     }
     
     public void generaInforme()
@@ -95,13 +107,44 @@ public class Controlador implements ActionListener,Observer
         String tipoInforme = (String)this.ventanaPrincipal.getJcbInformes().getSelectedItem();
         switch (tipoInforme.toUpperCase())
         {
-        case("Total de tareas"):
+        case("TOTAL DE TAREAS"): 
+            Cliente cliente = this.ventanaPrincipal.getJlClientes().getSelectedValue();
+            String inicioS = this.ventanaPrincipal.ingresaDato("Ingrese el inicio del periodo");
+            String finS = this.ventanaPrincipal.ingresaDato("Ingrese el fin del periodo");
+            String inicio[] = inicioS.split("/");
+            String fin[] = finS.split("/");
+            GregorianCalendar inicioP = new GregorianCalendar(Integer.parseInt(inicio[2]),Integer.parseInt(inicio[1])+1,Integer.parseInt(inicio[0]));
+            GregorianCalendar finP = new GregorianCalendar(Integer.parseInt(fin[2]),Integer.parseInt(fin[1])+1,Integer.parseInt(fin[0]));
+            String informe = this.bd.tareasCliente(cliente, inicioP, finP);
+            this.ventanaPrincipal.panelInformes(informe);
             break;
-        case("Tareas Colaborador"):
+        case("TAREAS COLABORADOR"):
+            Usuario colaborador = this.ventanaPrincipal.getJlColaboradores().getSelectedValue();
+            inicioS = this.ventanaPrincipal.ingresaDato("Ingrese el inicio del periodo");
+            finS = this.ventanaPrincipal.ingresaDato("Ingrese el fin del periodo");
+            inicio= inicioS.split("/");
+            fin= finS.split("/");
+            inicioP = new GregorianCalendar(Integer.parseInt(inicio[2]),Integer.parseInt(inicio[1])+1,Integer.parseInt(inicio[0]));
+            finP = new GregorianCalendar(Integer.parseInt(fin[2]),Integer.parseInt(fin[1])+1,Integer.parseInt(fin[0]));
+            informe = this.bd.tareasColaborador(colaborador, inicioP, finP);
+            this.ventanaPrincipal.panelInformes(informe);
             break;
-        case("Estado de tareas"):
+        case("ESTADO DE TAREAS"):
+            colaborador = this.ventanaPrincipal.getJlColaboradores().getSelectedValue();
+            informe = this.bd.tareasEstado(colaborador);
+            this.ventanaPrincipal.panelInformes(informe);
             break;
-        case("Tareas Usuario"):
+        case("TAREAS USUARIO"):
+            colaborador = this.getUsuarioActual();
+            String estado = this.ventanaPrincipal.ingresaDato("Ingrese el estado a filtrar");
+            inicioS = this.ventanaPrincipal.ingresaDato("Ingrese el inicio del periodo");
+            finS = this.ventanaPrincipal.ingresaDato("Ingrese el fin del periodo");
+            inicio= inicioS.split("/");
+            fin= finS.split("/");
+            inicioP = new GregorianCalendar(Integer.parseInt(inicio[2]),Integer.parseInt(inicio[1])+1,Integer.parseInt(inicio[0]));
+            finP = new GregorianCalendar(Integer.parseInt(fin[2]),Integer.parseInt(fin[1])+1,Integer.parseInt(fin[0]));
+            informe = this.bd.tareasUsuario(colaborador, inicioP, finP, estado);
+            this.ventanaPrincipal.panelInformes(informe);
             break;
         }
         
@@ -213,6 +256,7 @@ public class Controlador implements ActionListener,Observer
         this.ventanaPrincipal.panelJcbGrupos(this.bd.getGrupoClientes());
         this.ventanaPrincipal.panelJListServicios(this.bd.arrayServicios());
         this.ventanaPrincipal.panelJlistClientes(this.bd.arrayClientes());
+        this.ventanaPrincipal.panelJlistColaboradores(this.bd.arrayColaboradores());
         if (this.usuarioActual != null)
             this.ventanaPrincipal.panelTareas(this.bd.tareasUsuario(this.usuarioActual));
     }

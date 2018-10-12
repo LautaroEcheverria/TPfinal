@@ -20,6 +20,7 @@ import modelo.Cliente;
 import modelo.GrupoDeClientes;
 import modelo.Servicio;
 import modelo.Tarea;
+import modelo.Usuario;
 
 /**
  *
@@ -38,6 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         this.jbModificarTarea.addActionListener(c);
         this.jbCrearGrupos.addActionListener(c);
         this.jbIniciaSesion.addActionListener(c);
+        this.jbCambCont.addActionListener(c);
         this.jbCrearCliente.addActionListener(c);
         this.jbElimTarea.addActionListener(c);
         this.jbElimCliente.addActionListener(c);
@@ -66,6 +68,22 @@ public class VentanaPrincipal extends javax.swing.JFrame
         }
     }
     
+    public void panelJlistColaboradores(ArrayList<Usuario> usuarios)
+    {
+        if (usuarios != null)
+        {
+            this.jlColaboradores.removeAll();
+            DefaultListModel model = new DefaultListModel();
+            Iterator<Usuario> it = usuarios.iterator();
+            while (it.hasNext())
+            {
+                model.addElement(it.next());
+            }
+            this.jlColaboradores.setModel(model);
+            this.jlColaboradores.repaint();
+        }
+    }
+    
     public void panelJlistClientes(ArrayList<Cliente> clientes)
     {
         if (clientes != null)
@@ -80,6 +98,13 @@ public class VentanaPrincipal extends javax.swing.JFrame
             this.jlClientes.setModel(model);
             this.jlClientes.repaint();
         }
+    }
+    
+    public void panelInformes(String informe)
+    {
+        this.jtaInformes.setText("");
+        this.jtaInformes.append(informe);
+        this.jtaInformes.repaint();
     }
     
     public void panelJListServicios(ArrayList<Servicio> servicios)
@@ -183,6 +208,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jtfContrasena = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jbIniciaSesion = new javax.swing.JButton();
+        jbCambCont = new javax.swing.JButton();
         jbCreaUsuario = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -211,6 +237,8 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jlClientes = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         jlServicios = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jlColaboradores = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -251,6 +279,9 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         jbIniciaSesion.setText("Iniciar Sesion");
         jPanel6.add(jbIniciaSesion);
+
+        jbCambCont.setText("Cambiar Contraseña");
+        jPanel6.add(jbCambCont);
 
         jbCreaUsuario.setText("Crear Usuario");
         jPanel6.add(jbCreaUsuario);
@@ -326,7 +357,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 4));
+        jPanel7.setLayout(new java.awt.GridLayout(1, 5));
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tareas"));
         jScrollPane2.setToolTipText("");
@@ -354,6 +385,12 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jScrollPane4.setViewportView(jlServicios);
 
         jPanel7.add(jScrollPane4);
+
+        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder("Colaboradores"));
+
+        jScrollPane5.setViewportView(jlColaboradores);
+
+        jPanel7.add(jScrollPane5);
 
         getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
@@ -401,6 +438,8 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JButton jbCambCont;
     private javax.swing.JButton jbCreaServ;
     private javax.swing.JButton jbCreaTarea;
     private javax.swing.JButton jbCreaUsuario;
@@ -415,6 +454,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
     private javax.swing.JComboBox<GrupoDeClientes> jcbGrupos;
     private javax.swing.JComboBox<String> jcbInformes;
     private javax.swing.JList<Cliente> jlClientes;
+    private javax.swing.JList<Usuario> jlColaboradores;
     private javax.swing.JList<Servicio> jlServicios;
     private javax.swing.JList<Tarea> jlTareas;
     private javax.swing.JTextArea jtaInformes;
@@ -458,6 +498,16 @@ public class VentanaPrincipal extends javax.swing.JFrame
     public void setJlTareas(JList<Tarea> jlTareas)
     {
         this.jlTareas = jlTareas;
+    }
+
+    public void setJlColaboradores(JList<Usuario> jlColaboradores)
+    {
+        this.jlColaboradores = jlColaboradores;
+    }
+
+    public JList<Usuario> getJlColaboradores()
+    {
+        return jlColaboradores;
     }
 
     public JList<Tarea> getJlTareas()

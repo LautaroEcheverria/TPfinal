@@ -17,7 +17,7 @@ public class Usuario extends Persona implements Serializable
     public String toString()
     {
         // TODO Implement this method
-        return this.nombre_de_usuario+" Perfil: "+this.perfil;
+        return "Usuario: "+this.nombre_de_usuario+" Perfil: "+this.perfil;
     }
 
     public void setPerfil(String perfil) {

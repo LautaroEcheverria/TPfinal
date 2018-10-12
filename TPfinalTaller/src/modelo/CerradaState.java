@@ -15,6 +15,7 @@ public class CerradaState extends Estado implements Serializable
     {
         super("Cerrada");
         this.tarea = tarea;
+        this.tarea.tareaCerrada();
     }
 
     @Override

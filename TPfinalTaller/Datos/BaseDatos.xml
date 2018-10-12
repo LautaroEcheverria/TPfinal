@@ -3,7 +3,7 @@
  <object class="modelo.BaseDatos" id="BaseDatos0">
   <void property="clientes">
    <void method="put">
-    <string>Cliente 1</string>
+    <string>111</string>
     <object class="modelo.Cliente" id="Cliente0">
      <void property="cuit">
       <string>111</string>
@@ -14,7 +14,7 @@
      <void property="grupos_de_clientes">
       <object class="modelo.GrupoDeClientes" id="GrupoDeClientes0">
        <void property="nombre_grupo">
-        <string>Cliente A</string>
+        <string>Clientes B</string>
        </void>
       </object>
      </void>
@@ -29,11 +29,65 @@
      </void>
     </object>
    </void>
+   <void method="put">
+    <string>222</string>
+    <object class="modelo.Cliente" id="Cliente1">
+     <void property="cuit">
+      <string>222</string>
+     </void>
+     <void property="email">
+      <string>222</string>
+     </void>
+     <void property="grupos_de_clientes">
+      <object idref="GrupoDeClientes0"/>
+     </void>
+     <void property="nombre_apellido">
+      <string>Cliente 2</string>
+     </void>
+     <void property="razon_social">
+      <string>222</string>
+     </void>
+     <void property="telefono">
+      <string>222</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <string>333</string>
+    <object class="modelo.Cliente">
+     <void property="cuit">
+      <string>333</string>
+     </void>
+     <void property="email">
+      <string>333</string>
+     </void>
+     <void property="grupos_de_clientes">
+      <object idref="GrupoDeClientes0"/>
+     </void>
+     <void property="nombre_apellido">
+      <string>Cliente 3</string>
+     </void>
+     <void property="razon_social">
+      <string>333</string>
+     </void>
+     <void property="telefono">
+      <string>333</string>
+     </void>
+    </object>
+   </void>
   </void>
   <void property="grupoClientes">
    <void method="put">
-    <string>Cliente A</string>
+    <string>Clientes B</string>
     <object idref="GrupoDeClientes0"/>
+   </void>
+   <void method="put">
+    <string>Clientes A</string>
+    <object class="modelo.GrupoDeClientes">
+     <void property="nombre_grupo">
+      <string>Clientes A</string>
+     </void>
+    </object>
    </void>
   </void>
   <void property="servicios">
@@ -55,10 +109,24 @@
     <string>Servicio 2</string>
     <object class="modelo.Servicio">
      <void property="costo">
-      <double>20.0</double>
+      <double>400.0</double>
      </void>
      <void property="descripcion">
       <string>Servicio 2</string>
+     </void>
+     <void property="tipo">
+      <string>Fijo</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <string>Servicio 3</string>
+    <object class="modelo.Servicio">
+     <void property="costo">
+      <double>50.0</double>
+     </void>
+     <void property="descripcion">
+      <string>Servicio 3</string>
      </void>
      <void property="tipo">
       <string>Por hora</string>
@@ -78,7 +146,7 @@
         <string>1234</string>
        </void>
        <void property="email">
-        <string>f</string>
+        <string>ffffff</string>
        </void>
        <void property="nombre_apellido">
         <string>Franco Rolando</string>
@@ -90,9 +158,39 @@
         <string>Administrador</string>
        </void>
        <void property="telefono">
-        <string>123</string>
+        <string>1234</string>
        </void>
       </object>
+     </void>
+     <void property="estado_actual">
+      <object class="modelo.AbiertaState">
+       <void property="estado">
+        <string>Abierta</string>
+       </void>
+      </object>
+     </void>
+     <void property="fecha_inicio">
+      <void property="time">
+       <object class="java.util.Date">
+        <long>1539289300839</long>
+       </object>
+      </void>
+     </void>
+     <void property="servicio">
+      <object idref="Servicio0"/>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="modelo.Tarea" id="Tarea1">
+     <void property="cliente">
+      <object idref="Cliente1"/>
+     </void>
+     <void property="colaborador">
+      <object idref="Usuario0"/>
+     </void>
+     <void property="costo_total">
+      <double>200.0</double>
      </void>
      <void property="estado_actual">
       <object class="modelo.CerradaState">
@@ -101,10 +199,46 @@
        </void>
       </object>
      </void>
+     <void property="fecha_cierre">
+      <object class="java.util.GregorianCalendar">
+       <void property="time">
+        <object class="java.util.Date">
+         <long>1539295676685</long>
+        </object>
+       </void>
+      </object>
+     </void>
      <void property="fecha_inicio">
       <void property="time">
        <object class="java.util.Date">
-        <long>1539152802271</long>
+        <long>1539289333922</long>
+       </object>
+      </void>
+     </void>
+     <void property="servicio">
+      <object idref="Servicio0"/>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="modelo.Tarea" id="Tarea2">
+     <void property="cliente">
+      <object idref="Cliente0"/>
+     </void>
+     <void property="colaborador">
+      <object idref="Usuario0"/>
+     </void>
+     <void property="estado_actual">
+      <object class="modelo.AbiertaState">
+       <void property="estado">
+        <string>Abierta</string>
+       </void>
+      </object>
+     </void>
+     <void property="fecha_inicio">
+      <void property="time">
+       <object class="java.util.Date">
+        <long>1539295662551</long>
        </object>
       </void>
      </void>
@@ -118,6 +252,29 @@
    <void method="put">
     <string>franco</string>
     <object idref="Usuario0"/>
+   </void>
+   <void method="put">
+    <string>lauti</string>
+    <object class="modelo.Usuario">
+     <void property="contrasenia">
+      <string>1234</string>
+     </void>
+     <void property="email">
+      <string>1111</string>
+     </void>
+     <void property="nombre_apellido">
+      <string>Lautaro</string>
+     </void>
+     <void property="nombre_de_usuario">
+      <string>lauti</string>
+     </void>
+     <void property="perfil">
+      <string>Colaborador</string>
+     </void>
+     <void property="telefono">
+      <string>111</string>
+     </void>
+    </object>
    </void>
   </void>
  </object>
