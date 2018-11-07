@@ -27,14 +27,14 @@ public class BaseDatos extends Observable implements Serializable
         tareas = new ArrayList<Tarea>();
     }
     
-    private void cambioCont(Usuario actual,String contra)
+    public void cambioCont(Usuario actual,String contra)
     {
         Usuario aux = this.usuarios.get(actual.getNombre_de_usuario());
         aux.setContrasenia(contra);
         this.guardarBase();
     }
     
-    private String tareasCliente(Cliente cliente, GregorianCalendar inicio, GregorianCalendar fin)
+    public String tareasCliente(Cliente cliente, GregorianCalendar inicio, GregorianCalendar fin)
     {
         String retorno="";    
         Iterator<Tarea> it = this.tareas.iterator();
@@ -61,7 +61,7 @@ public class BaseDatos extends Observable implements Serializable
         return retorno;
     }
     
-    private String tareasColaborador(Usuario usuario, GregorianCalendar inicio, GregorianCalendar fin)
+    public String tareasColaborador(Usuario usuario, GregorianCalendar inicio, GregorianCalendar fin)
     {
         String retorno="";    
         Iterator<Cliente> it = this.clientes.values().iterator();
@@ -91,7 +91,7 @@ public class BaseDatos extends Observable implements Serializable
         return retorno;
     }
     
-    private String tareasEstado(Usuario usuario)
+    public String tareasEstado(Usuario usuario)
     {
         String retorno="";    
         Iterator<Tarea> it = this.tareas.iterator();
@@ -117,7 +117,7 @@ public class BaseDatos extends Observable implements Serializable
         return retorno;
     }
     
-    private String tareasUsuario(Usuario usuario, GregorianCalendar inicio, GregorianCalendar fin, String estado)
+    public String tareasUsuario(Usuario usuario, GregorianCalendar inicio, GregorianCalendar fin, String estado)
     {
         String retorno="";    
         Iterator<Tarea> it = this.tareas.iterator();
@@ -147,7 +147,7 @@ public class BaseDatos extends Observable implements Serializable
         return retorno;
     }
     
-    private void agregaTarea(Tarea nueva)
+    public void agregaTarea(Tarea nueva)
     {
         Iterator<Tarea> it = this.tareas.iterator();
         boolean ningunaAbierta = true;
@@ -165,49 +165,49 @@ public class BaseDatos extends Observable implements Serializable
         }
     }
     
-    private void elimTarea(Tarea elim)
+    public void elimTarea(Tarea elim)
     {
         this.tareas.remove(elim);
         this.guardarBase();
     }
     
-    private void agregaServicio(Servicio nuevo)
+    public void agregaServicio(Servicio nuevo)
     {
         this.servicios.put(nuevo.getDescripcion(), nuevo);
         this.guardarBase();
     }
     
-    private void elimServicio(Servicio elim)
+    public void elimServicio(Servicio elim)
     {
         this.servicios.remove(elim.getDescripcion());
         this.guardarBase();
     }
     
-    private void agregaCliente(Cliente nuevo)
+    public void agregaCliente(Cliente nuevo)
     {
         this.clientes.put(nuevo.getCuit(), nuevo);
         this.guardarBase();
     }
     
-    private void elimCliente(Cliente elim)
+    public void elimCliente(Cliente elim)
     {
         this.clientes.remove(elim.getCuit());
         this.guardarBase();
     }
     
-    private void agregaGrupoClientes(GrupoDeClientes nuevo)
+    public void agregaGrupoClientes(GrupoDeClientes nuevo)
     {
         this.grupoClientes.put(nuevo.getNombre_grupo(), nuevo);
         this.guardarBase();
     }
     
-    private void agregaUsuario(Usuario usuario) 
+    public void agregaUsuario(Usuario usuario) 
     {
         this.usuarios.put(usuario.getNombre_de_usuario(),usuario);
         this.guardarBase();
     }
     
-    private Usuario compruebaUsuario(String usuario,String contrasenia)
+    public Usuario compruebaUsuario(String usuario,String contrasenia)
     {
         Usuario resp=null;
         if (this.usuarios.containsKey(usuario))
@@ -219,7 +219,7 @@ public class BaseDatos extends Observable implements Serializable
         return resp;
     }
     
-    private ArrayList<Tarea> tareasUsuario(Usuario usuario)
+    public ArrayList<Tarea> tareasUsuario(Usuario usuario)
     {
         ArrayList<Tarea> aux;
         if (usuario.getPerfil().equals("Administrador"))
@@ -285,7 +285,7 @@ public class BaseDatos extends Observable implements Serializable
         this.updateObservers();
     }
 
-    private void updateObservers()
+    public void updateObservers()
     {
         this.setChanged();
         this.notifyObservers();
